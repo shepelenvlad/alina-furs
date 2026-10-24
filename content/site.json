@@ -1,0 +1,78 @@
+{
+  "title": "Алина Фурс",
+  "logo": "/uploads/logo.png",
+  "nav": [
+    {
+      "label": "Главная",
+      "href": "#hero",
+      "children": []
+    },
+    {
+      "label": "Закрытое сообщество",
+      "href": "#about",
+      "children": []
+    },
+    {
+      "label": "Сборник",
+      "href": "#",
+      "children": [
+        {
+          "label": "Сборник",
+          "href": "#"
+        },
+        {
+          "label": "Сборник «отношения»",
+          "href": "#features"
+        },
+        {
+          "label": "Сборник «самооценка»",
+          "href": "#features"
+        },
+        {
+          "label": "Сборник «состояние»",
+          "href": "#features"
+        }
+      ]
+    },
+    {
+      "label": "Личные консультации",
+      "href": "#cons",
+      "children": []
+    },
+    {
+      "label": "Цена",
+      "href": "#pricing",
+      "children": []
+    },
+    {
+      "label": "Алина Фурс",
+      "href": "#portfolio",
+      "children": []
+    },
+    {
+      "label": "Отзывы",
+      "href": "#testimonials",
+      "children": []
+    },
+    {
+      "label": "Как связаться",
+      "href": "#contact",
+      "children": []
+    }
+  ],
+  "footer": {
+    "siteName": "Alina Furs",
+    "description": "Психолог с высшим образованием и духовным взглядом на жизнь",
+    "socials": [],
+    "copyrightName": "Shepelenko",
+    "credits": "© Spain 2026"
+  },
+  "chatButton": {
+    "enabled": true,
+    "title": "Как мы можем помочь?",
+    "emailLabel": "Email:",
+    "messageLabel": "Сообщение:",
+    "messagePlaceholder": "Напиши то что на душе",
+    "formspreeUrl": "https://formspree.io/f/mojnplba"
+  }
+}
