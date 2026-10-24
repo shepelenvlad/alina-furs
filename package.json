@@ -2,11 +2,6 @@
   "name": "alina-furs",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "preview": "npx serve out"
-  },
   "dependencies": {
     "aos": "^2.3.4",
     "glightbox": "^3.3.0",
