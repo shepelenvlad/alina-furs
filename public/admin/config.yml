@@ -1,9 +1,9 @@
 # Admin panel settings (Decap CMS). Replace the three YOUR-... values, see README.md.
 backend:
   name: github
-  repo: YOUR-GITHUB-USER/YOUR-REPO      # e.g. alina/alina-furs
+  repo: shepelenvlad/YOUR-REPO      # e.g. alina/alina-furs
   branch: main
-  base_url: https://YOUR-OAUTH-WORKER.workers.dev   # the small free login helper, see README.md
+  base_url: https://decap-proxy.shepelenvlad.workers.dev/   # the small free login helper, see README.md
 
 locale: ru
 media_folder: public/uploads
