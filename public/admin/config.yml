@@ -3,7 +3,7 @@ backend:
   name: github
   repo: shepelenvlad/alina-furs      # e.g. alina/alina-furs
   branch: main
-  base_url: https://decap-proxy.shepelenvlad.workers.dev/   # the small free login helper, see README.md
+  base_url: https://decap-proxy.shepelenvlad.workers.dev   # the small free login helper, see README.md
 
 locale: ru
 media_folder: public/uploads
