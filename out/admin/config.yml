@@ -1,0 +1,367 @@
+# Admin panel settings (Decap CMS). Replace the three YOUR-... values, see README.md.
+backend:
+  name: github
+  repo: YOUR-GITHUB-USER/YOUR-REPO      # e.g. alina/alina-furs
+  branch: main
+  base_url: https://YOUR-OAUTH-WORKER.workers.dev   # the small free login helper, see README.md
+
+locale: ru
+media_folder: public/uploads
+public_folder: /uploads
+publish_mode: simple
+
+collections:
+  - name: site
+    label: "Сайт"
+    files:
+      - name: theme
+        label: "Цвета и внешний вид"
+        file: content/theme.json
+        fields:
+          - {label: "Главный цвет (кнопки, акценты)", name: accentColor, widget: color, enableAlpha: false}
+          - {label: "Цвет обычного текста", name: textColor, widget: color, enableAlpha: false}
+          - {label: "Цвет заголовков", name: headingColor, widget: color, enableAlpha: false}
+          - {label: "Цвет фона страницы", name: backgroundColor, widget: color, enableAlpha: false}
+          - {label: "Цвет фона тёмных блоков", name: darkSectionColor, widget: color, enableAlpha: false}
+          - {label: "Цвет пунктов меню", name: navColor, widget: color, enableAlpha: false}
+          - {label: "Цвет пункта меню при наведении", name: navHoverColor, widget: color, enableAlpha: false}
+          - {label: "Фоновая картинка главного экрана (необязательно)", name: heroBackground, widget: image, required: false}
+
+      - name: settings
+        label: "Меню, логотип, подвал"
+        file: content/site.json
+        fields:
+          - {label: "Название сайта", name: title, widget: string}
+          - {label: "Логотип", name: logo, widget: image}
+          - label: "Меню"
+            name: nav
+            widget: list
+            summary: "{{fields.label}}"
+            fields:
+              - {label: "Название пункта", name: label, widget: string}
+              - {label: "Ссылка (например #pricing)", name: href, widget: string}
+              - label: "Вложенные пункты (выпадающий список)"
+                name: children
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - {label: "Название", name: label, widget: string}
+                  - {label: "Ссылка", name: href, widget: string}
+          - label: "Подвал сайта"
+            name: footer
+            widget: object
+            fields:
+              - {label: "Название", name: siteName, widget: string}
+              - {label: "Описание", name: description, widget: text}
+              - {label: "Имя в Copyright", name: copyrightName, widget: string}
+              - {label: "Строка внизу", name: credits, widget: string}
+              - label: "Соцсети (пустые ссылки не показываются)"
+                name: socials
+                widget: list
+                required: false
+                summary: "{{fields.icon}}"
+                fields:
+                  - {label: "Иконка", name: icon, widget: select, default: "magic", options: [
+        {label: "Волшебная палочка", value: "magic"},
+        {label: "Звёзды", value: "stars"},
+        {label: "Сердечки", value: "hearts"},
+        {label: "Сердце", value: "heart-fill"},
+        {label: "Чат с сердцем", value: "chat-heart-fill"},
+        {label: "Чат", value: "chat-dots"},
+        {label: "Лупа с сердцем", value: "search-heart"},
+        {label: "Палец вверх", value: "hand-thumbs-up"},
+        {label: "Подарок", value: "gift-fill"},
+        {label: "Копилка", value: "piggy-bank-fill"},
+        {label: "Выпускная шапка", value: "mortarboard-fill"},
+        {label: "Лампочка", value: "lightbulb"},
+        {label: "Книга", value: "book"},
+        {label: "Часы", value: "clock"},
+        {label: "Щит", value: "shield-check"},
+        {label: "Человек с сердцем", value: "person-heart"},
+        {label: "Телефон", value: "telephone"},
+        {label: "Письмо", value: "envelope"},
+        {label: "Telegram", value: "telegram"},
+        {label: "Instagram", value: "instagram"},
+        {label: "YouTube", value: "youtube"},
+        {label: "Facebook", value: "facebook"},
+        {label: "WhatsApp", value: "whatsapp"},
+        {label: "TikTok", value: "tiktok"},
+        {label: "X (Twitter)", value: "twitter-x"},
+        {label: "LinkedIn", value: "linkedin"}
+      ]}
+                  - {label: "Ссылка", name: url, widget: string}
+          - label: "Плавающая кнопка «Как мы можем помочь?»"
+            name: chatButton
+            widget: object
+            fields:
+              - {label: "Показывать кнопку", name: enabled, widget: boolean, default: true}
+              - {label: "Заголовок окошка", name: title, widget: string}
+              - {label: "Подпись поля Email", name: emailLabel, widget: string}
+              - {label: "Подпись поля сообщения", name: messageLabel, widget: string}
+              - {label: "Подсказка в поле сообщения", name: messagePlaceholder, widget: string}
+              - {label: "Адрес формы Formspree", name: formspreeUrl, widget: string}
+
+      - name: home
+        label: "Главная страница (блоки)"
+        file: content/home.json
+        fields:
+          - label: "Блоки страницы (можно менять порядок, добавлять и удалять)"
+            name: blocks
+            widget: list
+            summary: "{{fields.title}}{{fields.heading}} {{fields.name}}"
+            types:
+              - label: "Главный экран (слайды)"
+                name: hero
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: hero}
+                  - label: "Слайды"
+                    name: slides
+                    widget: list
+                    summary: "{{fields.title}}"
+                    fields:
+                      - {label: "Заголовок", name: title, widget: string}
+                      - {label: "Текст", name: text, widget: text, required: false}
+                      - {label: "Текст кнопки", name: buttonLabel, widget: string, required: false}
+                      - {label: "Ссылка кнопки (#раздел или адрес)", name: buttonLink, widget: string, required: false}
+                      - {label: "Кнопка открывает видео YouTube", name: isVideo, widget: boolean, default: false}
+              - label: "Текст в две колонки"
+                name: about
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: about}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - {label: "Левая колонка", name: left, widget: markdown}
+                  - {label: "Текст кнопки", name: buttonLabel, widget: string, required: false}
+                  - {label: "Ссылка кнопки", name: buttonLink, widget: string, required: false}
+                  - {label: "Правая колонка: вступление", name: rightIntro, widget: markdown}
+                  - {label: "Правая колонка: пункты списка", name: bullets, widget: list, field: {label: "Пункт", name: item, widget: text}}
+              - label: "Вкладки с картинкой"
+                name: tabs
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: features}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Вкладки"
+                    name: tabs
+                    widget: list
+                    summary: "{{fields.label}}"
+                    fields:
+                      - {label: "Название вкладки", name: label, widget: string}
+                      - {label: "Заголовок внутри", name: heading, widget: text}
+                      - {label: "Первый список", name: list1, widget: list, field: {label: "Пункт", name: item, widget: text}}
+                      - {label: "Заголовок второго списка", name: listTitle, widget: string, required: false}
+                      - {label: "Второй список", name: list2, widget: list, required: false, field: {label: "Пункт", name: item, widget: text}}
+                      - {label: "Текст кнопки", name: buttonLabel, widget: string, required: false}
+                      - {label: "Ссылка кнопки", name: buttonLink, widget: string, required: false}
+                      - {label: "Картинка", name: image, widget: image}
+              - label: "Карточки с иконками"
+                name: cards
+                widget: object
+                fields:
+                  - {label: "Название блока для меню (латиницей, без пробелов)", name: anchor, widget: string, required: false}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Карточки"
+                    name: cards
+                    widget: list
+                    summary: "{{fields.title}}"
+                    fields:
+                      - {label: "Иконка", name: icon, widget: select, default: "magic", options: [
+        {label: "Волшебная палочка", value: "magic"},
+        {label: "Звёзды", value: "stars"},
+        {label: "Сердечки", value: "hearts"},
+        {label: "Сердце", value: "heart-fill"},
+        {label: "Чат с сердцем", value: "chat-heart-fill"},
+        {label: "Чат", value: "chat-dots"},
+        {label: "Лупа с сердцем", value: "search-heart"},
+        {label: "Палец вверх", value: "hand-thumbs-up"},
+        {label: "Подарок", value: "gift-fill"},
+        {label: "Копилка", value: "piggy-bank-fill"},
+        {label: "Выпускная шапка", value: "mortarboard-fill"},
+        {label: "Лампочка", value: "lightbulb"},
+        {label: "Книга", value: "book"},
+        {label: "Часы", value: "clock"},
+        {label: "Щит", value: "shield-check"},
+        {label: "Человек с сердцем", value: "person-heart"},
+        {label: "Телефон", value: "telephone"},
+        {label: "Письмо", value: "envelope"},
+        {label: "Telegram", value: "telegram"},
+        {label: "Instagram", value: "instagram"},
+        {label: "YouTube", value: "youtube"},
+        {label: "Facebook", value: "facebook"},
+        {label: "WhatsApp", value: "whatsapp"},
+        {label: "TikTok", value: "tiktok"},
+        {label: "X (Twitter)", value: "twitter-x"},
+        {label: "LinkedIn", value: "linkedin"}
+      ]}
+                      - {label: "Заголовок", name: title, widget: string}
+                      - {label: "Текст", name: text, widget: text}
+                      - {label: "Ссылка (необязательно)", name: link, widget: string, required: false}
+              - label: "Тёмный блок с кнопкой (консультация)"
+                name: consultation
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: cons}
+                  - {label: "Заголовок", name: heading, widget: string}
+                  - {label: "Текст", name: text, widget: text}
+                  - {label: "Текст кнопки", name: buttonLabel, widget: string, required: false}
+                  - {label: "Ссылка кнопки", name: buttonLink, widget: string, required: false}
+                  - label: "Пункты справа"
+                    name: items
+                    widget: list
+                    summary: "{{fields.title}}"
+                    fields:
+                      - {label: "Иконка", name: icon, widget: select, default: "magic", options: [
+        {label: "Волшебная палочка", value: "magic"},
+        {label: "Звёзды", value: "stars"},
+        {label: "Сердечки", value: "hearts"},
+        {label: "Сердце", value: "heart-fill"},
+        {label: "Чат с сердцем", value: "chat-heart-fill"},
+        {label: "Чат", value: "chat-dots"},
+        {label: "Лупа с сердцем", value: "search-heart"},
+        {label: "Палец вверх", value: "hand-thumbs-up"},
+        {label: "Подарок", value: "gift-fill"},
+        {label: "Копилка", value: "piggy-bank-fill"},
+        {label: "Выпускная шапка", value: "mortarboard-fill"},
+        {label: "Лампочка", value: "lightbulb"},
+        {label: "Книга", value: "book"},
+        {label: "Часы", value: "clock"},
+        {label: "Щит", value: "shield-check"},
+        {label: "Человек с сердцем", value: "person-heart"},
+        {label: "Телефон", value: "telephone"},
+        {label: "Письмо", value: "envelope"},
+        {label: "Telegram", value: "telegram"},
+        {label: "Instagram", value: "instagram"},
+        {label: "YouTube", value: "youtube"},
+        {label: "Facebook", value: "facebook"},
+        {label: "WhatsApp", value: "whatsapp"},
+        {label: "TikTok", value: "tiktok"},
+        {label: "X (Twitter)", value: "twitter-x"},
+        {label: "LinkedIn", value: "linkedin"}
+      ]}
+                      - {label: "Заголовок", name: title, widget: string}
+                      - {label: "Текст", name: text, widget: text}
+                      - {label: "Ссылка (необязательно)", name: link, widget: string, required: false}
+              - label: "Обо мне (слайдер и текст)"
+                name: aboutMe
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: portfolio}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - {label: "Фотографии для слайдера", name: slides, widget: list, field: {label: "Фото", name: photo, widget: image}}
+                  - {label: "Цитата", name: quote, widget: text}
+                  - {label: "Фото рядом с цитатой", name: photo, widget: image}
+                  - {label: "Имя", name: name, widget: string}
+                  - {label: "Должность", name: role, widget: string}
+                  - {label: "Текст о себе", name: text, widget: markdown}
+              - label: "Галерея отзывов"
+                name: gallery
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: testimonials}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Отзывы"
+                    name: items
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - {label: "Скриншот отзыва", name: image, widget: image}
+                      - {label: "Имя", name: name, widget: string, required: false}
+                      - {label: "Звёзд (0-5)", name: stars, widget: number, default: 5, min: 0, max: 5, value_type: int}
+              - label: "Цены"
+                name: pricing
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: pricing}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Тарифы"
+                    name: plans
+                    widget: list
+                    summary: "{{fields.name}}"
+                    fields:
+                      - {label: "Название", name: name, widget: string}
+                      - {label: "Валюта", name: currency, widget: string, default: "₽"}
+                      - {label: "Цена", name: price, widget: string}
+                      - {label: "Старая цена (зачёркнутая, необязательно)", name: oldPrice, widget: string, required: false}
+                      - {label: "Единица (например / месяц)", name: unit, widget: string, required: false}
+                      - {label: "Плашка (например: Скидка до 27.04)", name: badge, widget: string, required: false}
+                      - {label: "Выделить тариф", name: featured, widget: boolean, default: false}
+                      - {label: "Что входит", name: features, widget: list, field: {label: "Пункт", name: item, widget: text}}
+                      - {label: "Текст кнопки", name: buttonLabel, widget: string, required: false}
+                      - {label: "Ссылка кнопки (оплата)", name: buttonLink, widget: string, required: false}
+              - label: "Вопросы и ответы"
+                name: faq
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: faq}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Вопросы"
+                    name: items
+                    widget: list
+                    summary: "{{fields.question}}"
+                    fields:
+                      - {label: "Вопрос", name: question, widget: string}
+                      - {label: "Ответ", name: answer, widget: text}
+              - label: "Контакты и форма"
+                name: contact
+                widget: object
+                fields:
+                  - {name: anchor, widget: hidden, default: contact}
+                  - {label: "Заголовок", name: title, widget: string}
+                  - {label: "Подзаголовок", name: subtitle, widget: string, required: false}
+                  - label: "Контакты слева"
+                    name: contacts
+                    widget: list
+                    summary: "{{fields.label}}"
+                    fields:
+                      - {label: "Иконка", name: icon, widget: select, default: "magic", options: [
+        {label: "Волшебная палочка", value: "magic"},
+        {label: "Звёзды", value: "stars"},
+        {label: "Сердечки", value: "hearts"},
+        {label: "Сердце", value: "heart-fill"},
+        {label: "Чат с сердцем", value: "chat-heart-fill"},
+        {label: "Чат", value: "chat-dots"},
+        {label: "Лупа с сердцем", value: "search-heart"},
+        {label: "Палец вверх", value: "hand-thumbs-up"},
+        {label: "Подарок", value: "gift-fill"},
+        {label: "Копилка", value: "piggy-bank-fill"},
+        {label: "Выпускная шапка", value: "mortarboard-fill"},
+        {label: "Лампочка", value: "lightbulb"},
+        {label: "Книга", value: "book"},
+        {label: "Часы", value: "clock"},
+        {label: "Щит", value: "shield-check"},
+        {label: "Человек с сердцем", value: "person-heart"},
+        {label: "Телефон", value: "telephone"},
+        {label: "Письмо", value: "envelope"},
+        {label: "Telegram", value: "telegram"},
+        {label: "Instagram", value: "instagram"},
+        {label: "YouTube", value: "youtube"},
+        {label: "Facebook", value: "facebook"},
+        {label: "WhatsApp", value: "whatsapp"},
+        {label: "TikTok", value: "tiktok"},
+        {label: "X (Twitter)", value: "twitter-x"},
+        {label: "LinkedIn", value: "linkedin"}
+      ]}
+                      - {label: "Название (Telegram, Email...)", name: label, widget: string}
+                      - {label: "Значение", name: value, widget: string}
+                  - {label: "Адрес формы Formspree", name: formspreeUrl, widget: string}
+                  - {label: "Подсказка: имя", name: namePlaceholder, widget: string}
+                  - {label: "Подсказка: email", name: emailPlaceholder, widget: string}
+                  - {label: "Подсказка: тема", name: subjectPlaceholder, widget: string}
+                  - {label: "Подсказка: сообщение", name: messagePlaceholder, widget: string}
+                  - {label: "Текст кнопки отправки", name: buttonLabel, widget: string}
+                  - {label: "Сообщение об успехе", name: successMessage, widget: string}
+                  - {label: "Сообщение об ошибке", name: errorMessage, widget: string}
+              - label: "Волнистый разделитель"
+                name: waves
+                widget: object
+                fields:
+                  - {name: note, widget: hidden, default: "decor"}
